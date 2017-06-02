@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="vote" default="all">
+  
+  
+  <property file="vote.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.zip"/>
+    <include name="*.egg"/>
+    <include name="*.ane"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/icedtea-sound.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.gradle:_org.jetbrains.kotlin:kotlin-stdlib:1.1.2.classpath">
+    <pathelement location="${basedir}/../../../home/joey/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.1.2/109c63008b2d569e38696a3178ee2493b0f6c776/kotlin-stdlib-1.1.2.jar"/>
+  </path>
+  
+  <path id="library.gradle:_org.jetbrains:annotations:13.0.classpath">
+    <pathelement location="${basedir}/../../../home/joey/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar"/>
+  </path>
+  
+  <path id="library.kotlinjavaruntime.classpath">
+    <pathelement location="${path.variable.kotlin_bundled}/lib/kotlin-reflect.jar"/>
+    <pathelement location="${path.variable.kotlin_bundled}/lib/kotlin-runtime.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module main -->
+  
+  <dirname property="module.main.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.main" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.main" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.main" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.main" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="main.output.dir" value="${module.main.basedir}/classes/production/main"/>
+  <property name="main.testoutput.dir" value="${module.main.basedir}/classes/test/main"/>
+  
+  <path id="main.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="main.module.production.classpath">
+    <path refid="${module.jdk.classpath.main}"/>
+    <path refid="library.kotlinjavaruntime.classpath"/>
+    <pathelement location="${basedir}/lib/darcula.jar"/>
+  </path>
+  
+  <path id="main.runtime.production.module.classpath">
+    <pathelement location="${main.output.dir}"/>
+    <path refid="library.kotlinjavaruntime.classpath"/>
+    <pathelement location="${basedir}/lib/darcula.jar"/>
+  </path>
+  
+  <path id="main.module.classpath">
+    <path refid="${module.jdk.classpath.main}"/>
+    <pathelement location="${main.output.dir}"/>
+    <path refid="library.kotlinjavaruntime.classpath"/>
+    <pathelement location="${basedir}/lib/darcula.jar"/>
+  </path>
+  
+  <path id="main.runtime.module.classpath">
+    <pathelement location="${main.testoutput.dir}"/>
+    <pathelement location="${main.output.dir}"/>
+    <path refid="library.kotlinjavaruntime.classpath"/>
+    <pathelement location="${basedir}/lib/darcula.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.main">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.main">
+    <patternset refid="excluded.from.module.main"/>
+  </patternset>
+  
+  <path id="main.module.sourcepath">
+    <dirset dir="${module.main.basedir}/main">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.main" depends="compile.module.main.production,compile.module.main.tests" description="Compile module main"/>
+  
+  <target name="compile.module.main.production" depends="register.custom.compilers" description="Compile module main; production classes">
+    <mkdir dir="${main.output.dir}"/>
+    <javac2 destdir="${main.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.main}/javac">
+      <compilerarg line="${compiler.args.main}"/>
+      <bootclasspath refid="main.module.bootclasspath"/>
+      <classpath refid="main.module.production.classpath"/>
+      <src refid="main.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.main"/>
+    </javac2>
+    
+    <copy todir="${main.output.dir}">
+      <fileset dir="${module.main.basedir}/main/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.main.tests" depends="register.custom.compilers,compile.module.main.production" description="compile module main; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.main" description="cleanup module">
+    <delete dir="${main.output.dir}"/>
+    <delete dir="${main.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module vote -->
+  
+  <dirname property="module.vote.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.vote" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.vote" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.vote" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.vote" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="vote.output.dir" value="${module.vote.basedir}/classes/production/vote"/>
+  <property name="vote.testoutput.dir" value="${module.vote.basedir}/classes/test/vote"/>
+  
+  <path id="vote.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="vote.module.production.classpath">
+    <path refid="${module.jdk.classpath.vote}"/>
+  </path>
+  
+  <path id="vote.runtime.production.module.classpath">
+    <pathelement location="${vote.output.dir}"/>
+  </path>
+  
+  <path id="vote.module.classpath">
+    <path refid="${module.jdk.classpath.vote}"/>
+    <pathelement location="${vote.output.dir}"/>
+  </path>
+  
+  <path id="vote.runtime.module.classpath">
+    <pathelement location="${vote.testoutput.dir}"/>
+    <pathelement location="${vote.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.vote">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.vote">
+    <patternset refid="excluded.from.module.vote"/>
+  </patternset>
+  
+  
+  <target name="compile.module.vote" depends="compile.module.vote.production,compile.module.vote.tests" description="Compile module vote"/>
+  
+  <target name="compile.module.vote.production" depends="register.custom.compilers" description="Compile module vote; production classes"/>
+  
+  <target name="compile.module.vote.tests" depends="register.custom.compilers,compile.module.vote.production" description="compile module vote; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.vote" description="cleanup module">
+    <delete dir="${vote.output.dir}"/>
+    <delete dir="${vote.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module vote_main -->
+  
+  <dirname property="module.vote_main.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.vote_main" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.vote_main" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.vote_main" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.vote_main" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="vote_main.output.dir" value="${module.vote_main.basedir}/build/classes/main"/>
+  <property name="vote_main.testoutput.dir" value="${module.vote_main.basedir}/build/classes/main"/>
+  
+  <path id="vote_main.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="vote_main.module.production.classpath">
+    <path refid="${module.jdk.classpath.vote_main}"/>
+    <pathelement location="${basedir}/lib/darcula.jar"/>
+    <path refid="library.gradle:_org.jetbrains.kotlin:kotlin-stdlib:1.1.2.classpath"/>
+    <path refid="library.gradle:_org.jetbrains:annotations:13.0.classpath"/>
+  </path>
+  
+  <path id="vote_main.runtime.production.module.classpath">
+    <pathelement location="${vote_main.output.dir}"/>
+    <pathelement location="${basedir}/lib/darcula.jar"/>
+    <path refid="library.gradle:_org.jetbrains.kotlin:kotlin-stdlib:1.1.2.classpath"/>
+    <path refid="library.gradle:_org.jetbrains:annotations:13.0.classpath"/>
+  </path>
+  
+  <path id="vote_main.module.classpath">
+    <path refid="${module.jdk.classpath.vote_main}"/>
+    <pathelement location="${vote_main.output.dir}"/>
+    <pathelement location="${basedir}/lib/darcula.jar"/>
+    <path refid="library.gradle:_org.jetbrains.kotlin:kotlin-stdlib:1.1.2.classpath"/>
+    <path refid="library.gradle:_org.jetbrains:annotations:13.0.classpath"/>
+  </path>
+  
+  <path id="vote_main.runtime.module.classpath">
+    <pathelement location="${vote_main.output.dir}"/>
+    <pathelement location="${basedir}/lib/darcula.jar"/>
+    <path refid="library.gradle:_org.jetbrains.kotlin:kotlin-stdlib:1.1.2.classpath"/>
+    <path refid="library.gradle:_org.jetbrains:annotations:13.0.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.vote_main">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.vote_main">
+    <patternset refid="excluded.from.module.vote_main"/>
+  </patternset>
+  
+  <path id="vote_main.module.sourcepath">
+    <dirset dir="${module.vote_main.basedir}/src/main">
+      <include name="java"/>
+      <include name="kotlin"/>
+      <include name="resources"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.vote_main" depends="compile.module.vote_main.production,compile.module.vote_main.tests" description="Compile module vote_main"/>
+  
+  <target name="compile.module.vote_main.production" depends="register.custom.compilers" description="Compile module vote_main; production classes">
+    <mkdir dir="${vote_main.output.dir}"/>
+    <javac2 destdir="${vote_main.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.vote_main}/javac">
+      <compilerarg line="${compiler.args.vote_main}"/>
+      <bootclasspath refid="vote_main.module.bootclasspath"/>
+      <classpath refid="vote_main.module.production.classpath"/>
+      <src refid="vote_main.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.vote_main"/>
+    </javac2>
+    
+    <copy todir="${vote_main.output.dir}">
+      <fileset dir="${module.vote_main.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.vote_main.basedir}/src/main/kotlin">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.vote_main.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.vote_main.tests" depends="register.custom.compilers,compile.module.vote_main.production" description="compile module vote_main; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.vote_main" description="cleanup module">
+    <delete dir="${vote_main.output.dir}"/>
+    <delete dir="${vote_main.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module vote_test -->
+  
+  <dirname property="module.vote_test.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.vote_test" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.vote_test" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.vote_test" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.vote_test" value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="vote_test.output.dir" value="undefined"/>
+  <property name="vote_test.testoutput.dir" value="${module.vote_test.basedir}/build/classes/test"/>
+  
+  <path id="vote_test.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="vote_test.module.production.classpath">
+    <path refid="${module.jdk.classpath.vote_test}"/>
+    <pathelement location="${vote_main.output.dir}"/>
+    <pathelement location="${basedir}/lib/darcula.jar"/>
+    <path refid="library.gradle:_org.jetbrains.kotlin:kotlin-stdlib:1.1.2.classpath"/>
+    <path refid="library.gradle:_org.jetbrains:annotations:13.0.classpath"/>
+  </path>
+  
+  <path id="vote_test.runtime.production.module.classpath">
+    <pathelement location="${vote_main.output.dir}"/>
+    <pathelement location="${basedir}/lib/darcula.jar"/>
+    <path refid="library.gradle:_org.jetbrains.kotlin:kotlin-stdlib:1.1.2.classpath"/>
+    <path refid="library.gradle:_org.jetbrains:annotations:13.0.classpath"/>
+    <pathelement location="${basedir}/lib/darcula.jar"/>
+  </path>
+  
+  <path id="vote_test.module.classpath">
+    <path refid="${module.jdk.classpath.vote_test}"/>
+    <pathelement location="${vote_main.output.dir}"/>
+    <pathelement location="${basedir}/lib/darcula.jar"/>
+    <path refid="library.gradle:_org.jetbrains.kotlin:kotlin-stdlib:1.1.2.classpath"/>
+    <path refid="library.gradle:_org.jetbrains:annotations:13.0.classpath"/>
+  </path>
+  
+  <path id="vote_test.runtime.module.classpath">
+    <pathelement location="${vote_test.testoutput.dir}"/>
+    <pathelement location="${vote_main.output.dir}"/>
+    <pathelement location="${basedir}/lib/darcula.jar"/>
+    <path refid="library.gradle:_org.jetbrains.kotlin:kotlin-stdlib:1.1.2.classpath"/>
+    <path refid="library.gradle:_org.jetbrains:annotations:13.0.classpath"/>
+    <pathelement location="${basedir}/lib/darcula.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.vote_test">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.vote_test">
+    <patternset refid="excluded.from.module.vote_test"/>
+  </patternset>
+  
+  <path id="vote_test.module.test.sourcepath">
+    <dirset dir="${module.vote_test.basedir}/src/test">
+      <include name="java"/>
+      <include name="kotlin"/>
+      <include name="resources"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.vote_test" depends="compile.module.vote_test.production,compile.module.vote_test.tests" description="Compile module vote_test"/>
+  
+  <target name="compile.module.vote_test.production" depends="register.custom.compilers,compile.module.vote_main" description="Compile module vote_test; production classes"/>
+  
+  <target name="compile.module.vote_test.tests" depends="register.custom.compilers,compile.module.vote_test.production" description="compile module vote_test; test classes" unless="skip.tests">
+    <mkdir dir="${vote_test.testoutput.dir}"/>
+    <javac2 destdir="${vote_test.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.vote_test}/javac">
+      <compilerarg line="${compiler.args.vote_test}"/>
+      <bootclasspath refid="vote_test.module.bootclasspath"/>
+      <classpath refid="vote_test.module.classpath"/>
+      <src refid="vote_test.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.vote_test"/>
+    </javac2>
+    
+    <copy todir="${vote_test.testoutput.dir}">
+      <fileset dir="${module.vote_test.basedir}/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.vote_test.basedir}/src/test/kotlin">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.vote_test.basedir}/src/test/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.vote_test" description="cleanup module">
+    <delete dir="${vote_test.output.dir}"/>
+    <delete dir="${vote_test.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.main, clean.module.vote, clean.module.vote_main, clean.module.vote_test" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.main, compile.module.vote, compile.module.vote_main, compile.module.vote_test" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
