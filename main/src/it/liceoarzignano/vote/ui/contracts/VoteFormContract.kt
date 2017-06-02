@@ -47,20 +47,17 @@ class VoteFormContract(val room: Room, val size: Int) {
 
     private fun onVote(frame: JFrame, list: JList<String>, progressBar: JProgressBar,
                        progressLabel: JLabel, button: JButton) {
-        if (i <= size + 1) {
-            for (item in list.selectedIndices) {
-                room.teachers[item].votes++
-            }
-
+        if (i <= size +1) {
+            list.selectedIndices.forEach { room.teachers[it].votes++ }
             JOptionPane.showMessageDialog(frame, "Il tuo voto e\' stato registrato. Grazie per aver votato!", "Votazione",
                     JOptionPane.INFORMATION_MESSAGE)
 
             list.clearSelection()
             progressBar.value = i
             progressLabel.text = "$i/$size"
-
         }
-        if (i > size) {
+
+        if (i == size + 1) {
             button.isEnabled = false
             list.isEnabled = false
             val out = DataSaver().exportResult(room)

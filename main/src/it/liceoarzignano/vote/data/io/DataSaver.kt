@@ -13,10 +13,6 @@ class DataSaver {
 
     fun exportResult(room: Room): String {
         val file = File(EXPORT_DIR + room.name + "_results.csv")
-        if (!file.canWrite()) {
-            throw IOException("Unable to access " + file.path)
-        }
-
         if (!File(EXPORT_DIR).exists()) {
             File(EXPORT_DIR).mkdirs()
         }
