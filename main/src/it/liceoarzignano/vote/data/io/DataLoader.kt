@@ -15,6 +15,7 @@ import java.io.*
  * | DATA
  *   | Rooms.txt
  *   | Teachers.txt
+ *   | Domanda.txt
  *   | teachers
  *     | RossiMario.txt
  *     | VerdiLuigi.txt
@@ -29,6 +30,7 @@ class DataLoader {
     private val ROOMS = BASE_PATH + "Rooms.txt"
     private val TEACHERS = BASE_PATH + "Teachers.txt"
     private val TEACHERS_FOLDER = BASE_PATH + "teachers" + File.separator
+    private val QUESTION = BASE_PATH + "Domanda.txt"
 
     fun loadRooms(): List<Room> {
         if (!File(ROOMS).canRead()) {
@@ -81,5 +83,22 @@ class DataLoader {
         }
 
         return rooms
+    }
+
+    fun getQuestion(): String {
+        val reader = BufferedReader(FileReader(QUESTION))
+        var line = reader.readLine()
+        val readQuestion = StringBuilder()
+
+        readQuestion.append("<html>")
+        while (line != null) {
+            readQuestion.append(line)
+            line = reader.readLine()
+            if (line != null) {
+                readQuestion.append("<br>")
+            }
+        }
+
+        return readQuestion.toString()
     }
 }

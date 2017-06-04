@@ -1,5 +1,6 @@
 package it.liceoarzignano.vote.ui.contracts
 
+import it.liceoarzignano.vote.data.io.DataLoader
 import it.liceoarzignano.vote.data.io.DataSaver
 import it.liceoarzignano.vote.data.model.Room
 import it.liceoarzignano.vote.ui.components.*
@@ -11,14 +12,21 @@ class VoteFormContract(val room: Room, val size: Int) {
     private val MAX = 2
     private var i: Int = 1
 
-    fun setup(frame: VoteFrame, title: JLabel, list: JList<String>, button: JButton,
+    fun setup(frame: VoteFrame, title: JLabel, question: JLabel, list: JList<String>, button: JButton,
               progressBar: JProgressBar, progressLabel: JLabel) {
+        // Frame
         frame.setSize(800, 600)
         frame.setCustomFont(18)
 
+        // Title
         title.text = "Classe " + room.name
         title.font = frame.getCustomFont(48)
 
+        // Question
+        question.text = DataLoader().getQuestion()
+        question.font = frame.getCustomFont(18)
+
+        // List
         val model = DefaultListModel<String>()
         for (teacher in room.teachers) {
             model.addElement(teacher.name)
@@ -28,9 +36,11 @@ class VoteFormContract(val room: Room, val size: Int) {
         list.addListSelectionListener(ListSelectionDocument())
         list.model = model
 
+        // Progress
         progressBar.maximum = size
         progressLabel.text = "1/$size"
 
+        // Button
         button.addMouseListener(object : MouseAdapter() {
             override fun mouseClicked(mouseEvent: MouseEvent?) {
                 super.mouseClicked(mouseEvent)
