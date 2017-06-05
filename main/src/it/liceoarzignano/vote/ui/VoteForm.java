@@ -15,13 +15,13 @@ import java.awt.*;
 public class VoteForm extends JDialog {
     private JPanel panel;
     private JLabel roomLabel;
-    private JLabel questionLabel;
     private JList<String> checkList;
     private JProgressBar votesProgressBar;
     private JLabel votesProgressLabel;
     private JButton button;
+    private JTextArea questionArea;
 
-    public VoteForm(int selected, int size) {
+    public VoteForm(int selected, int size, boolean parent) {
         try {
             UIManager.setLookAndFeel(new DarculaLaf());
         } catch (final UnsupportedLookAndFeelException ignored) {
@@ -30,8 +30,8 @@ public class VoteForm extends JDialog {
         VoteFrame frame = new VoteFrame(panel);
 
         Room room = new DataLoader().loadRoomsWithTeachers().get(selected);
-        VoteFormContract contract = new VoteFormContract(room, size);
-        contract.setup(frame, roomLabel, questionLabel, checkList, button,
+        VoteFormContract contract = new VoteFormContract(room, size, parent);
+        contract.setup(frame, roomLabel, questionArea, checkList, button,
                 votesProgressBar, votesProgressLabel);
 
         SwingUtilities.updateComponentTreeUI(frame);
@@ -82,10 +82,13 @@ public class VoteForm extends JDialog {
         panel.add(votesProgressLabel, new GridConstraints(4, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         checkList = new JList();
         panel.add(checkList, new GridConstraints(3, 1, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(192, 128), null, 0, false));
-        questionLabel = new JLabel();
-        questionLabel.setForeground(new Color(-2039584));
-        questionLabel.setText("Label");
-        panel.add(questionLabel, new GridConstraints(2, 1, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        questionArea = new JTextArea();
+        questionArea.setBackground(new Color(-12828863));
+        questionArea.setDragEnabled(false);
+        questionArea.setEditable(false);
+        questionArea.setFocusable(false);
+        questionArea.setForeground(new Color(-2039584));
+        panel.add(questionArea, new GridConstraints(2, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, 50), null, null, 0, false));
     }
 
     /**

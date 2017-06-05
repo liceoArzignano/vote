@@ -22,7 +22,8 @@ import java.io.*
  *     | BluAndrea.txt
  *     | [...]
  *  | RESULTS
- *    | 1A1_results.csv
+ *    | RossiMario.csv
+ *    | VerdiLuigi.csv
  *    | [...]
  */
 class DataLoader {
@@ -31,6 +32,7 @@ class DataLoader {
     private val TEACHERS = BASE_PATH + "Teachers.txt"
     private val TEACHERS_FOLDER = BASE_PATH + "teachers" + File.separator
     private val QUESTION = BASE_PATH + "Domanda.txt"
+
 
     fun loadRooms(): List<Room> {
         if (!File(ROOMS).canRead()) {
@@ -90,12 +92,11 @@ class DataLoader {
         var line = reader.readLine()
         val readQuestion = StringBuilder()
 
-        readQuestion.append("<html>")
         while (line != null) {
             readQuestion.append(line)
             line = reader.readLine()
             if (line != null) {
-                readQuestion.append("<br>")
+                readQuestion.append('\n')
             }
         }
 

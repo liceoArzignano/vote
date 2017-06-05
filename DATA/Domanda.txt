@@ -1,4 +1,7 @@
-Hello world
-1- <b>Bold</b>
-2- <i>Italic</i>
-3- Text
+Esprimo per quest'anno scolastico un giudizio particolarmente positivo
+sull'operato dei seguenti docenti della mia classe per
+- Capacita di creare un ambiente sereno e rispettoso in classe
+- Capacita didattica e organizzativa
+- Esposizione chiara degli argomenti e disponibilita a fornire ulteriori spiegazioni
+- Indicazioni di studio, compiti e correzione degli stessi in classe
+- Rispetto dei tempi di restituzione delle verifiche e motivazione delle stesse

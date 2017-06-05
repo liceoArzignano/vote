@@ -7,24 +7,29 @@ import it.liceoarzignano.vote.ui.components.VoteFrame
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.util.regex.Pattern
-import javax.swing.JButton
-import javax.swing.JComboBox
-import javax.swing.JTextField
+import javax.swing.*
 
 class SelectorFormContract {
 
-    fun setup(frame: VoteFrame, comboBox: JComboBox<String>, numberPicker: JTextField, button: JButton) {
+    fun setup(frame: VoteFrame, comboBox: JComboBox<String>, numberPicker: JTextField,
+              label: JLabel, button: JButton, parent: Boolean) {
         frame.setCustomFont(18)
 
         val rooms = DataLoader().loadRooms()
         rooms.forEach { comboBox.addItem(it.name) }
 
+        if (parent) {
+            numberPicker.text = "1"
+            numberPicker.isVisible = false
+            label.text = "Votazione genitori"
+        }
         button.addMouseListener(object : MouseAdapter() {
             override fun mouseClicked(mouseEvent: MouseEvent?) {
                 super.mouseClicked(mouseEvent)
                 if (Pattern.compile("[0-9]+").matcher(numberPicker.text).matches()) {
                     frame.isVisible = false
-                    VoteForm(comboBox.selectedIndex, numberPicker.text.toInt())
+                    frame.dispose()
+                    VoteForm(comboBox.selectedIndex, numberPicker.text.toInt(), parent)
                 } else {
                     Toast.makeToast(frame, "Inserisci un numero di votanti valido").display()
                 }

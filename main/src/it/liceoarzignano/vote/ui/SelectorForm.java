@@ -15,8 +15,9 @@ public class SelectorForm {
     private JComboBox<String> selectorComboBox;
     private JTextField numberPicker;
     private JButton button;
+    private JLabel label;
 
-    public SelectorForm() {
+    public SelectorForm(boolean parent) {
         try {
             UIManager.setLookAndFeel(new DarculaLaf());
         } catch (final Exception ignored) {
@@ -24,7 +25,8 @@ public class SelectorForm {
         VoteFrame frame = new VoteFrame(panel);
 
         SelectorFormContract contract = new SelectorFormContract();
-        contract.setup(frame, selectorComboBox, numberPicker, button);
+        contract.setup(frame, selectorComboBox, numberPicker, label, button, parent);
+
 
         SwingUtilities.updateComponentTreeUI(frame);
         frame.setVisible(true);
@@ -57,14 +59,14 @@ public class SelectorForm {
         panel.add(selectorComboBox, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(12, -1), null, null, 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Classe");
-        panel.add(label1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel.add(label1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
         panel.add(spacer3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, new Dimension(8, -1), null, 0, false));
         final Spacer spacer4 = new Spacer();
         panel.add(spacer4, new GridConstraints(2, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, new Dimension(8, -1), null, 0, false));
-        final JLabel label2 = new JLabel();
-        label2.setText("Votanti");
-        panel.add(label2, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label = new JLabel();
+        label.setText("Votanti");
+        panel.add(label, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         button = new JButton();
         button.setText("Inizia la votazione");
         button.setMnemonic('I');
